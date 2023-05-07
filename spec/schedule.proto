@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package schedule;
+option go_package = "schedule";
+
+service ScheduleService {
+  rpc GetSchedule (ScheduleRequest) returns (ScheduleResponse) {}
+}
+
+message ScheduleRequest {
+  int32 member_id = 1;
+}
+
+message ScheduleResponse {
+  repeated string schedule_names = 1;
+}
