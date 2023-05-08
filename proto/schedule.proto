@@ -1,7 +1,8 @@
 syntax = "proto3";
 
 package schedule;
-option go_package = "schedule";
+
+option go_package = "github.com/taki-umi/aques-sample-service/backend/internal/proto;proto";
 
 service ScheduleService {
   rpc GetSchedule (ScheduleRequest) returns (ScheduleResponse) {}

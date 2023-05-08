@@ -4,7 +4,7 @@
 // - protoc             v3.21.12
 // source: proto/schedule.proto
 
-package pb
+package proto
 
 import (
 	context "context"
@@ -47,19 +47,21 @@ func (c *scheduleServiceClient) GetSchedule(ctx context.Context, in *ScheduleReq
 }
 
 // ScheduleServiceServer is the server API for ScheduleService service.
-// All implementations should embed UnimplementedScheduleServiceServer
+// All implementations must embed UnimplementedScheduleServiceServer
 // for forward compatibility
 type ScheduleServiceServer interface {
 	GetSchedule(context.Context, *ScheduleRequest) (*ScheduleResponse, error)
+	mustEmbedUnimplementedScheduleServiceServer()
 }
 
-// UnimplementedScheduleServiceServer should be embedded to have forward compatible implementations.
+// UnimplementedScheduleServiceServer must be embedded to have forward compatible implementations.
 type UnimplementedScheduleServiceServer struct {
 }
 
 func (UnimplementedScheduleServiceServer) GetSchedule(context.Context, *ScheduleRequest) (*ScheduleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSchedule not implemented")
 }
+func (UnimplementedScheduleServiceServer) mustEmbedUnimplementedScheduleServiceServer() {}
 
 // UnsafeScheduleServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to ScheduleServiceServer will
