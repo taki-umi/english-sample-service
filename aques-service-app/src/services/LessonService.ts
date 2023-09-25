@@ -1,11 +1,13 @@
 import { API, graphqlOperation } from "aws-amplify";
-import { listLessons } from "../graphql/queries";
+import { lessonsByUserId } from "../graphql/queries";
 import { Lesson } from "../models/Lesson";
 
 export const fetchLessons = async (): Promise<Lesson[]> => {
   try {
-    const data = (await API.graphql(graphqlOperation(listLessons))) as {
-      data: { listLessons: { items: Lesson[] } };
+    const data = (await API.graphql(
+      graphqlOperation(lessonsByUserId, { userId: "99999" }) // TODO: ログイン時に取得したユーザIDを指定する
+    )) as {
+      data: { lessonsByUserId: { items: Lesson[] } };
     };
 
     if ("errors" in data) {
@@ -14,9 +16,10 @@ export const fetchLessons = async (): Promise<Lesson[]> => {
     }
 
     console.log("Fetching lessons:", data);
-    return data.data.listLessons.items.map((lesson: Lesson) => {
+    return data.data.lessonsByUserId.items.map((lesson: Lesson) => {
       return {
         id: lesson.id,
+        userId: lesson.userId,
         reservationNumber: lesson.reservationNumber,
         description: lesson.description,
         date: lesson.date,

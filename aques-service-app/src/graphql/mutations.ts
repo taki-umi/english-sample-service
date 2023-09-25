@@ -9,11 +9,13 @@ export const createUser = /* GraphQL */ `
   ) {
     createUser(input: $input, condition: $condition) {
       id
+      userId
       username
       email
       lessons {
         items {
           id
+          userId
           reservationNumber
           title
           description
@@ -23,7 +25,6 @@ export const createUser = /* GraphQL */ `
           lessonStatus
           createdAt
           updatedAt
-          userLessonsId
           __typename
         }
         nextToken
@@ -42,11 +43,13 @@ export const updateUser = /* GraphQL */ `
   ) {
     updateUser(input: $input, condition: $condition) {
       id
+      userId
       username
       email
       lessons {
         items {
           id
+          userId
           reservationNumber
           title
           description
@@ -56,7 +59,6 @@ export const updateUser = /* GraphQL */ `
           lessonStatus
           createdAt
           updatedAt
-          userLessonsId
           __typename
         }
         nextToken
@@ -75,11 +77,13 @@ export const deleteUser = /* GraphQL */ `
   ) {
     deleteUser(input: $input, condition: $condition) {
       id
+      userId
       username
       email
       lessons {
         items {
           id
+          userId
           reservationNumber
           title
           description
@@ -89,7 +93,6 @@ export const deleteUser = /* GraphQL */ `
           lessonStatus
           createdAt
           updatedAt
-          userLessonsId
           __typename
         }
         nextToken
@@ -108,6 +111,7 @@ export const createLesson = /* GraphQL */ `
   ) {
     createLesson(input: $input, condition: $condition) {
       id
+      userId
       reservationNumber
       title
       description
@@ -115,9 +119,21 @@ export const createLesson = /* GraphQL */ `
       startTime
       endTime
       lessonStatus
+      user {
+        id
+        userId
+        username
+        email
+        lessons {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      userLessonsId
       __typename
     }
   }
@@ -129,6 +145,7 @@ export const updateLesson = /* GraphQL */ `
   ) {
     updateLesson(input: $input, condition: $condition) {
       id
+      userId
       reservationNumber
       title
       description
@@ -136,9 +153,21 @@ export const updateLesson = /* GraphQL */ `
       startTime
       endTime
       lessonStatus
+      user {
+        id
+        userId
+        username
+        email
+        lessons {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      userLessonsId
       __typename
     }
   }
@@ -150,6 +179,7 @@ export const deleteLesson = /* GraphQL */ `
   ) {
     deleteLesson(input: $input, condition: $condition) {
       id
+      userId
       reservationNumber
       title
       description
@@ -157,9 +187,21 @@ export const deleteLesson = /* GraphQL */ `
       startTime
       endTime
       lessonStatus
+      user {
+        id
+        userId
+        username
+        email
+        lessons {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      userLessonsId
       __typename
     }
   }

@@ -1,9 +1,11 @@
 import React from "react";
+import { Lesson } from "../models/Lesson";
 import { View, Text, StyleSheet } from "react-native";
 
 interface LessonCardProps {
   lesson: {
     id: string;
+    userId: string;
     reservationNumber: string;
     description: string;
     date: string;
@@ -16,6 +18,7 @@ const LessonCard: React.FC<LessonCardProps> = ({ lesson }) => {
   return (
     <View style={styles.card}>
       <Text style={styles.title}>ID: {lesson.id}</Text>
+      <Text>UserId: {lesson.userId}</Text>
       <Text>Reservation Number: {lesson.reservationNumber}</Text>
       <Text>Description: {lesson.description}</Text>
       <Text>Date: {lesson.date}</Text>

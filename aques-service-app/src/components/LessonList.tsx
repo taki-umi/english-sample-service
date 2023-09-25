@@ -30,6 +30,7 @@ const LessonList = () => {
 
   return (
     <View>
+      <Text>Lesson List</Text>
       <FlatList
         data={lessons}
         keyExtractor={(lesson) => lesson.id}

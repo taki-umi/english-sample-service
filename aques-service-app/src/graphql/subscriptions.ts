@@ -6,11 +6,13 @@ export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
     onCreateUser(filter: $filter) {
       id
+      userId
       username
       email
       lessons {
         items {
           id
+          userId
           reservationNumber
           title
           description
@@ -20,7 +22,6 @@ export const onCreateUser = /* GraphQL */ `
           lessonStatus
           createdAt
           updatedAt
-          userLessonsId
           __typename
         }
         nextToken
@@ -36,11 +37,13 @@ export const onUpdateUser = /* GraphQL */ `
   subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
     onUpdateUser(filter: $filter) {
       id
+      userId
       username
       email
       lessons {
         items {
           id
+          userId
           reservationNumber
           title
           description
@@ -50,7 +53,6 @@ export const onUpdateUser = /* GraphQL */ `
           lessonStatus
           createdAt
           updatedAt
-          userLessonsId
           __typename
         }
         nextToken
@@ -66,11 +68,13 @@ export const onDeleteUser = /* GraphQL */ `
   subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
     onDeleteUser(filter: $filter) {
       id
+      userId
       username
       email
       lessons {
         items {
           id
+          userId
           reservationNumber
           title
           description
@@ -80,7 +84,6 @@ export const onDeleteUser = /* GraphQL */ `
           lessonStatus
           createdAt
           updatedAt
-          userLessonsId
           __typename
         }
         nextToken
@@ -96,6 +99,7 @@ export const onCreateLesson = /* GraphQL */ `
   subscription OnCreateLesson($filter: ModelSubscriptionLessonFilterInput) {
     onCreateLesson(filter: $filter) {
       id
+      userId
       reservationNumber
       title
       description
@@ -103,9 +107,21 @@ export const onCreateLesson = /* GraphQL */ `
       startTime
       endTime
       lessonStatus
+      user {
+        id
+        userId
+        username
+        email
+        lessons {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      userLessonsId
       __typename
     }
   }
@@ -114,6 +130,7 @@ export const onUpdateLesson = /* GraphQL */ `
   subscription OnUpdateLesson($filter: ModelSubscriptionLessonFilterInput) {
     onUpdateLesson(filter: $filter) {
       id
+      userId
       reservationNumber
       title
       description
@@ -121,9 +138,21 @@ export const onUpdateLesson = /* GraphQL */ `
       startTime
       endTime
       lessonStatus
+      user {
+        id
+        userId
+        username
+        email
+        lessons {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      userLessonsId
       __typename
     }
   }
@@ -132,6 +161,7 @@ export const onDeleteLesson = /* GraphQL */ `
   subscription OnDeleteLesson($filter: ModelSubscriptionLessonFilterInput) {
     onDeleteLesson(filter: $filter) {
       id
+      userId
       reservationNumber
       title
       description
@@ -139,9 +169,21 @@ export const onDeleteLesson = /* GraphQL */ `
       startTime
       endTime
       lessonStatus
+      user {
+        id
+        userId
+        username
+        email
+        lessons {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      userLessonsId
       __typename
     }
   }

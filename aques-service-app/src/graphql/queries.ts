@@ -6,11 +6,13 @@ export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
+      userId
       username
       email
       lessons {
         items {
           id
+          userId
           reservationNumber
           title
           description
@@ -20,7 +22,6 @@ export const getUser = /* GraphQL */ `
           lessonStatus
           createdAt
           updatedAt
-          userLessonsId
           __typename
         }
         nextToken
@@ -49,6 +50,7 @@ export const listUsers = /* GraphQL */ `
     ) {
       items {
         id
+        userId
         username
         email
         lessons {
@@ -68,6 +70,7 @@ export const getLesson = /* GraphQL */ `
   query GetLesson($id: ID!) {
     getLesson(id: $id) {
       id
+      userId
       reservationNumber
       title
       description
@@ -75,9 +78,21 @@ export const getLesson = /* GraphQL */ `
       startTime
       endTime
       lessonStatus
+      user {
+        id
+        userId
+        username
+        email
+        lessons {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      userLessonsId
       __typename
     }
   }
@@ -99,6 +114,7 @@ export const listLessons = /* GraphQL */ `
     ) {
       items {
         id
+        userId
         reservationNumber
         title
         description
@@ -106,9 +122,60 @@ export const listLessons = /* GraphQL */ `
         startTime
         endTime
         lessonStatus
+        user {
+          id
+          userId
+          username
+          email
+          createdAt
+          updatedAt
+          __typename
+        }
         createdAt
         updatedAt
-        userLessonsId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const lessonsByUserId = /* GraphQL */ `
+  query LessonsByUserId(
+    $userId: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelLessonFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    lessonsByUserId(
+      userId: $userId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        reservationNumber
+        title
+        description
+        date
+        startTime
+        endTime
+        lessonStatus
+        user {
+          id
+          userId
+          username
+          email
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
         __typename
       }
       nextToken

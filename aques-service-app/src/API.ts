@@ -4,11 +4,13 @@
 
 export type CreateUserInput = {
   id?: string | null,
+  userId: string,
   username: string,
   email: string,
 };
 
 export type ModelUserConditionInput = {
+  userId?: ModelStringInput | null,
   username?: ModelStringInput | null,
   email?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
@@ -59,6 +61,7 @@ export type ModelSizeInput = {
 export type User = {
   __typename: "User",
   id: string,
+  userId: string,
   username: string,
   email: string,
   lessons?: ModelLessonConnection | null,
@@ -75,6 +78,7 @@ export type ModelLessonConnection = {
 export type Lesson = {
   __typename: "Lesson",
   id: string,
+  userId: string,
   reservationNumber: string,
   title?: string | null,
   description?: string | null,
@@ -82,13 +86,14 @@ export type Lesson = {
   startTime: string,
   endTime: string,
   lessonStatus: string,
+  user?: User | null,
   createdAt: string,
   updatedAt: string,
-  userLessonsId?: string | null,
 };
 
 export type UpdateUserInput = {
   id: string,
+  userId?: string | null,
   username?: string | null,
   email?: string | null,
 };
@@ -99,6 +104,7 @@ export type DeleteUserInput = {
 
 export type CreateLessonInput = {
   id?: string | null,
+  userId: string,
   reservationNumber: string,
   title?: string | null,
   description?: string | null,
@@ -106,10 +112,10 @@ export type CreateLessonInput = {
   startTime: string,
   endTime: string,
   lessonStatus: string,
-  userLessonsId?: string | null,
 };
 
 export type ModelLessonConditionInput = {
+  userId?: ModelStringInput | null,
   reservationNumber?: ModelStringInput | null,
   title?: ModelStringInput | null,
   description?: ModelStringInput | null,
@@ -120,7 +126,32 @@ export type ModelLessonConditionInput = {
   and?: Array< ModelLessonConditionInput | null > | null,
   or?: Array< ModelLessonConditionInput | null > | null,
   not?: ModelLessonConditionInput | null,
-  userLessonsId?: ModelIDInput | null,
+};
+
+export type UpdateLessonInput = {
+  id: string,
+  userId?: string | null,
+  reservationNumber?: string | null,
+  title?: string | null,
+  description?: string | null,
+  date?: string | null,
+  startTime?: string | null,
+  endTime?: string | null,
+  lessonStatus?: string | null,
+};
+
+export type DeleteLessonInput = {
+  id: string,
+};
+
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null,
+  userId?: ModelStringInput | null,
+  username?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
 };
 
 export type ModelIDInput = {
@@ -139,31 +170,6 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type UpdateLessonInput = {
-  id: string,
-  reservationNumber?: string | null,
-  title?: string | null,
-  description?: string | null,
-  date?: string | null,
-  startTime?: string | null,
-  endTime?: string | null,
-  lessonStatus?: string | null,
-  userLessonsId?: string | null,
-};
-
-export type DeleteLessonInput = {
-  id: string,
-};
-
-export type ModelUserFilterInput = {
-  id?: ModelIDInput | null,
-  username?: ModelStringInput | null,
-  email?: ModelStringInput | null,
-  and?: Array< ModelUserFilterInput | null > | null,
-  or?: Array< ModelUserFilterInput | null > | null,
-  not?: ModelUserFilterInput | null,
-};
-
 export enum ModelSortDirection {
   ASC = "ASC",
   DESC = "DESC",
@@ -178,6 +184,7 @@ export type ModelUserConnection = {
 
 export type ModelLessonFilterInput = {
   id?: ModelIDInput | null,
+  userId?: ModelStringInput | null,
   reservationNumber?: ModelStringInput | null,
   title?: ModelStringInput | null,
   description?: ModelStringInput | null,
@@ -188,11 +195,11 @@ export type ModelLessonFilterInput = {
   and?: Array< ModelLessonFilterInput | null > | null,
   or?: Array< ModelLessonFilterInput | null > | null,
   not?: ModelLessonFilterInput | null,
-  userLessonsId?: ModelIDInput | null,
 };
 
 export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  userId?: ModelSubscriptionStringInput | null,
   username?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
@@ -231,6 +238,7 @@ export type ModelSubscriptionStringInput = {
 
 export type ModelSubscriptionLessonFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  userId?: ModelSubscriptionStringInput | null,
   reservationNumber?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
@@ -251,6 +259,7 @@ export type CreateUserMutation = {
   createUser?:  {
     __typename: "User",
     id: string,
+    userId: string,
     username: string,
     email: string,
     lessons?:  {
@@ -258,6 +267,7 @@ export type CreateUserMutation = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        userId: string,
         reservationNumber: string,
         title?: string | null,
         description?: string | null,
@@ -267,7 +277,6 @@ export type CreateUserMutation = {
         lessonStatus: string,
         createdAt: string,
         updatedAt: string,
-        userLessonsId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -285,6 +294,7 @@ export type UpdateUserMutation = {
   updateUser?:  {
     __typename: "User",
     id: string,
+    userId: string,
     username: string,
     email: string,
     lessons?:  {
@@ -292,6 +302,7 @@ export type UpdateUserMutation = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        userId: string,
         reservationNumber: string,
         title?: string | null,
         description?: string | null,
@@ -301,7 +312,6 @@ export type UpdateUserMutation = {
         lessonStatus: string,
         createdAt: string,
         updatedAt: string,
-        userLessonsId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -319,6 +329,7 @@ export type DeleteUserMutation = {
   deleteUser?:  {
     __typename: "User",
     id: string,
+    userId: string,
     username: string,
     email: string,
     lessons?:  {
@@ -326,6 +337,7 @@ export type DeleteUserMutation = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        userId: string,
         reservationNumber: string,
         title?: string | null,
         description?: string | null,
@@ -335,7 +347,6 @@ export type DeleteUserMutation = {
         lessonStatus: string,
         createdAt: string,
         updatedAt: string,
-        userLessonsId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -353,6 +364,7 @@ export type CreateLessonMutation = {
   createLesson?:  {
     __typename: "Lesson",
     id: string,
+    userId: string,
     reservationNumber: string,
     title?: string | null,
     description?: string | null,
@@ -360,9 +372,21 @@ export type CreateLessonMutation = {
     startTime: string,
     endTime: string,
     lessonStatus: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      userId: string,
+      username: string,
+      email: string,
+      lessons?:  {
+        __typename: "ModelLessonConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    userLessonsId?: string | null,
   } | null,
 };
 
@@ -375,6 +399,7 @@ export type UpdateLessonMutation = {
   updateLesson?:  {
     __typename: "Lesson",
     id: string,
+    userId: string,
     reservationNumber: string,
     title?: string | null,
     description?: string | null,
@@ -382,9 +407,21 @@ export type UpdateLessonMutation = {
     startTime: string,
     endTime: string,
     lessonStatus: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      userId: string,
+      username: string,
+      email: string,
+      lessons?:  {
+        __typename: "ModelLessonConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    userLessonsId?: string | null,
   } | null,
 };
 
@@ -397,6 +434,7 @@ export type DeleteLessonMutation = {
   deleteLesson?:  {
     __typename: "Lesson",
     id: string,
+    userId: string,
     reservationNumber: string,
     title?: string | null,
     description?: string | null,
@@ -404,9 +442,21 @@ export type DeleteLessonMutation = {
     startTime: string,
     endTime: string,
     lessonStatus: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      userId: string,
+      username: string,
+      email: string,
+      lessons?:  {
+        __typename: "ModelLessonConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    userLessonsId?: string | null,
   } | null,
 };
 
@@ -418,6 +468,7 @@ export type GetUserQuery = {
   getUser?:  {
     __typename: "User",
     id: string,
+    userId: string,
     username: string,
     email: string,
     lessons?:  {
@@ -425,6 +476,7 @@ export type GetUserQuery = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        userId: string,
         reservationNumber: string,
         title?: string | null,
         description?: string | null,
@@ -434,7 +486,6 @@ export type GetUserQuery = {
         lessonStatus: string,
         createdAt: string,
         updatedAt: string,
-        userLessonsId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -457,6 +508,7 @@ export type ListUsersQuery = {
     items:  Array< {
       __typename: "User",
       id: string,
+      userId: string,
       username: string,
       email: string,
       lessons?:  {
@@ -478,6 +530,7 @@ export type GetLessonQuery = {
   getLesson?:  {
     __typename: "Lesson",
     id: string,
+    userId: string,
     reservationNumber: string,
     title?: string | null,
     description?: string | null,
@@ -485,9 +538,21 @@ export type GetLessonQuery = {
     startTime: string,
     endTime: string,
     lessonStatus: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      userId: string,
+      username: string,
+      email: string,
+      lessons?:  {
+        __typename: "ModelLessonConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    userLessonsId?: string | null,
   } | null,
 };
 
@@ -505,6 +570,7 @@ export type ListLessonsQuery = {
     items:  Array< {
       __typename: "Lesson",
       id: string,
+      userId: string,
       reservationNumber: string,
       title?: string | null,
       description?: string | null,
@@ -512,9 +578,55 @@ export type ListLessonsQuery = {
       startTime: string,
       endTime: string,
       lessonStatus: string,
+      user?:  {
+        __typename: "User",
+        id: string,
+        userId: string,
+        username: string,
+        email: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       createdAt: string,
       updatedAt: string,
-      userLessonsId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type LessonsByUserIdQueryVariables = {
+  userId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelLessonFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type LessonsByUserIdQuery = {
+  lessonsByUserId?:  {
+    __typename: "ModelLessonConnection",
+    items:  Array< {
+      __typename: "Lesson",
+      id: string,
+      userId: string,
+      reservationNumber: string,
+      title?: string | null,
+      description?: string | null,
+      date: string,
+      startTime: string,
+      endTime: string,
+      lessonStatus: string,
+      user?:  {
+        __typename: "User",
+        id: string,
+        userId: string,
+        username: string,
+        email: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -528,6 +640,7 @@ export type OnCreateUserSubscription = {
   onCreateUser?:  {
     __typename: "User",
     id: string,
+    userId: string,
     username: string,
     email: string,
     lessons?:  {
@@ -535,6 +648,7 @@ export type OnCreateUserSubscription = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        userId: string,
         reservationNumber: string,
         title?: string | null,
         description?: string | null,
@@ -544,7 +658,6 @@ export type OnCreateUserSubscription = {
         lessonStatus: string,
         createdAt: string,
         updatedAt: string,
-        userLessonsId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -561,6 +674,7 @@ export type OnUpdateUserSubscription = {
   onUpdateUser?:  {
     __typename: "User",
     id: string,
+    userId: string,
     username: string,
     email: string,
     lessons?:  {
@@ -568,6 +682,7 @@ export type OnUpdateUserSubscription = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        userId: string,
         reservationNumber: string,
         title?: string | null,
         description?: string | null,
@@ -577,7 +692,6 @@ export type OnUpdateUserSubscription = {
         lessonStatus: string,
         createdAt: string,
         updatedAt: string,
-        userLessonsId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -594,6 +708,7 @@ export type OnDeleteUserSubscription = {
   onDeleteUser?:  {
     __typename: "User",
     id: string,
+    userId: string,
     username: string,
     email: string,
     lessons?:  {
@@ -601,6 +716,7 @@ export type OnDeleteUserSubscription = {
       items:  Array< {
         __typename: "Lesson",
         id: string,
+        userId: string,
         reservationNumber: string,
         title?: string | null,
         description?: string | null,
@@ -610,7 +726,6 @@ export type OnDeleteUserSubscription = {
         lessonStatus: string,
         createdAt: string,
         updatedAt: string,
-        userLessonsId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -627,6 +742,7 @@ export type OnCreateLessonSubscription = {
   onCreateLesson?:  {
     __typename: "Lesson",
     id: string,
+    userId: string,
     reservationNumber: string,
     title?: string | null,
     description?: string | null,
@@ -634,9 +750,21 @@ export type OnCreateLessonSubscription = {
     startTime: string,
     endTime: string,
     lessonStatus: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      userId: string,
+      username: string,
+      email: string,
+      lessons?:  {
+        __typename: "ModelLessonConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    userLessonsId?: string | null,
   } | null,
 };
 
@@ -648,6 +776,7 @@ export type OnUpdateLessonSubscription = {
   onUpdateLesson?:  {
     __typename: "Lesson",
     id: string,
+    userId: string,
     reservationNumber: string,
     title?: string | null,
     description?: string | null,
@@ -655,9 +784,21 @@ export type OnUpdateLessonSubscription = {
     startTime: string,
     endTime: string,
     lessonStatus: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      userId: string,
+      username: string,
+      email: string,
+      lessons?:  {
+        __typename: "ModelLessonConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    userLessonsId?: string | null,
   } | null,
 };
 
@@ -669,6 +810,7 @@ export type OnDeleteLessonSubscription = {
   onDeleteLesson?:  {
     __typename: "Lesson",
     id: string,
+    userId: string,
     reservationNumber: string,
     title?: string | null,
     description?: string | null,
@@ -676,8 +818,20 @@ export type OnDeleteLessonSubscription = {
     startTime: string,
     endTime: string,
     lessonStatus: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      userId: string,
+      username: string,
+      email: string,
+      lessons?:  {
+        __typename: "ModelLessonConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    userLessonsId?: string | null,
   } | null,
 };
